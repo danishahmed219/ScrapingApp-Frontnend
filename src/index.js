@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import UserMiddleWare from './User';
+import Header from './header_banner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Header />
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<App />}></Route>
+            <Route path="/user" element={<UserMiddleWare />}></Route>
+        </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
