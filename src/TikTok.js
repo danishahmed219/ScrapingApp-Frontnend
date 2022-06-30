@@ -1,13 +1,12 @@
 import {Container, Row } from "react-bootstrap";
 import React from "react";
-import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faUser, faHeart, faVideo } from '@fortawesome/free-solid-svg-icons';
 import Image from 'react-bootstrap/Image'
 import axios from "axios";
 import './assets/User.jpg';
 
-class User extends React.Component {
+class TikTok extends React.Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
@@ -17,8 +16,11 @@ class User extends React.Component {
     }
 
     componentDidMount() {
-      axios.post('http://localhost:8000', {
-            video_id: this.props.userObj.video_id
+        const video_id = this.props.postObj[0];
+
+          axios.post('http://52.53.164.183:8000', {
+            social_media_type:'tiktok',
+            post_id: video_id   
         }).then((data) => {
             this.setState({Response: data});
             console.log(this.state.Response);
@@ -35,7 +37,6 @@ class User extends React.Component {
                         <center><img className='img-fluid rounded-circle my-3' alt="thumbnail" src={this.state.Response?this.state.Response.data.author.avatarMedium:'./User.jpg'} style={{maxWidth: '24rem'}} /></center>
                         <h4>{this.state.Response?this.state.Response.data.author.nickname:'Author Name'}</h4>
                         <p className="text-center">{this.state.Response?this.state.Response.data.author.signature:'Signature'}</p>
-                    
                     
                     <div className="col-lg-3">
                     <h5><FontAwesomeIcon icon={faUser} size="lg" className="mt-3" /> Comment</h5>
@@ -70,12 +71,4 @@ class User extends React.Component {
     }
 }
 
-const UserMiddleWare = () => {
-    const {state} = useLocation();
-
-    return (
-        <User userObj={state} />
-    );
-}
-
-export default UserMiddleWare;
+export default TikTok;

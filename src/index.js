@@ -6,13 +6,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import UserMiddleWare from './User';
+import UserMiddleWare from './UserMiddleWare';
 import Header from './header_banner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Header />
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<App />}></Route>

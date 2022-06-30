@@ -1,11 +1,16 @@
 import React from "react";
 
 class Header extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return(
         <header className="mt-5">
-            <h1 style={{textAlign: 'center'}}>Tiktok Viewer Count</h1>
-            <h2>Get Your Tiktok Stats</h2>
+            <h1 style={{textAlign: 'center'}}>{this.props.title}</h1>
+            <h2>{this.props.message}</h2>
         </header>);
     }
 }
