@@ -18,7 +18,7 @@ class Instagram extends React.Component {
     componentDidMount() {
         const video_id = this.props.postObj;
       
-          axios.post('http://52.53.164.183:8000', {
+          axios.post('http://52.53.159.159:8000', {
             social_media_type:'instragram',
             post_id: video_id
         }).then((data) => {
