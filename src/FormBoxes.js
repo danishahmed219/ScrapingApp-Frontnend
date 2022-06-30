@@ -9,13 +9,13 @@ const FormBoxes = () => {
         
         return(
             <div>
-               <Header className="mb-3" title="Social Media Stats" message="Get your social media stats" />
+               <Header className="mb-3" title="Pillar Social Post Reports" message="Get your social media stats" />
                 <Container className="my-5">
                
                     <Row className="justify-content-center">
                         <Col lg={5}>
-                            <Form.Control onChange={(e) => {setUrl(e.target.value)}} type="text" placeholder="Search By Video ID" className="mb-3"></Form.Control>
-                            <Button onClick={() => {navigate("/user", {state: {post_url: url}});}} variant="primary" as="Col">Get View Count</Button>
+                            <Form.Control onChange={(e) => {setUrl(e.target.value)}} type="text" placeholder="Instagram or Tiktok Link" className="mb-3"></Form.Control>
+                            <Button onClick={() => {navigate("/user", {state: {post_url: url}});}} variant="primary" as="Col">Get Post Details</Button>
                         </Col>
                     </Row>
                 </Container>

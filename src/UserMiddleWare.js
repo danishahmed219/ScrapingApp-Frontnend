@@ -8,17 +8,18 @@ const UserMiddleWare = () => {
     const {state} = useLocation();
     let hostname = null;
 
-    if(state.post_url) {
+
+    if(state.post_url.match("instagram") || state.post_url.match("tiktok")) {
         hostname = new URL(state.post_url).hostname.split('.')[1]
     }
 
     if(hostname === "tiktok") {      
         const video_id = /([0-9])+/.exec(state.post_url);
         console.log(video_id);
-        
+
         return (
             <div>
-                <Header message="Get Your Tiktok Stats" title="Tiktok Viewer Count"/>
+                <Header message="Get Your Tiktok Stats" title="Tiktok Stats"/>
                 <TikTok postObj={video_id} />
             </div>
         );
@@ -26,7 +27,7 @@ const UserMiddleWare = () => {
     } else if(hostname === "instagram") {
         return (
             <div>
-                <Header message="Get Your Instagram Post Stats" title="Instagram Viewer Count" />
+                <Header message="Get Your Instagram Post Stats" title="Instagram Stats" />
                 <Instagram postObj={state.post_url} />
             </div>
         );

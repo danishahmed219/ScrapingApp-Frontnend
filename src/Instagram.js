@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faUser, faHeart, faVideo } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import './assets/User.jpg';
+import DefaultImage from './assets/user_default.jpeg';
 
 class Instagram extends React.Component {
     // eslint-disable-next-line no-useless-constructor
@@ -30,20 +31,20 @@ class Instagram extends React.Component {
 
     render() {
 
-        const profile_url = this.state.Response?this.state.Response.data["Profile URL"]:'';
-        const thumbnail_url = this.state.Response?this.state.Response.data["Thumbnail URL"]:'';
+        const profile_url = this.state.Response?`https://circumvent-cors.herokuapp.com/${this.state.Response.data["Profile URL"]}`:DefaultImage;
+        const thumbnail_url = this.state.Response?`https://circumvent-cors.herokuapp.com/${this.state.Response.data["Thumbnail URL"]}`:DefaultImage;
 
         return(
         <div>
             <Container className="col-lg-6">
                 <Row className="mt-4">                    
 
-                    <center><img crossOrigin="anonymous" className='img-fluid rounded-circle my-3' alt="thumbnail" src={`https://circumvent-cors.herokuapp.com/${profile_url}`} style={{maxWidth: '24rem'}} /></center>
+                    <center><img crossOrigin="anonymous" className='img-fluid rounded-circle my-3' alt="thumbnail" src={profile_url} style={{maxWidth: '24rem'}} /></center>
                     <h4>{this.state.Response?this.state.Response.data['FullName:']:'Author Name'}</h4>
                         
                     
                     <div className="col-lg-6">
-                    <h5><FontAwesomeIcon icon={faUser} size="lg" className="mt-3" /> Comment</h5>
+                    <h5><FontAwesomeIcon icon={faUser} size="lg" className="mt-3" /> Comments</h5>
                     <h4>{this.state.Response?this.state.Response.data['Comment Count']:100}</h4>
                     </div>
 
@@ -54,7 +55,7 @@ class Instagram extends React.Component {
 
                     <center>
                         <h2>Your Post</h2>
-                        <img crossOrigin="anonymous" className='img-fluid my-3' src={`https://circumvent-cors.herokuapp.com/${thumbnail_url}`} style={{maxWidth: '400rem'}} /></center>
+                        <img crossOrigin="anonymous" className='img-fluid my-3' src={thumbnail_url} style={{maxWidth: '400rem'}} /></center>
 
                 </Row>
 
