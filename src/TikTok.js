@@ -17,17 +17,39 @@ class TikTok extends React.Component {
     }
 
     componentDidMount() {
-        const video_id = this.props.postObj[0];
+        const video_id_temp = this.props.postObj;
+        console.log(video_id_temp);
+       
+        if(video_id_temp.match("/t/")) {
+            axios.get(`http://52.53.159.159:5000?url=${video_id_temp}`, {
+            }).then((data) => {
+                    const video_id = /([0-9])+/.exec(data.data.VideoURL);
+                    console.log(video_id[0]);
 
-          axios.post('http://52.53.159.159:8000', {
-            social_media_type:'tiktok',
-            post_id: video_id   
-        }).then((data) => {
-            this.setState({Response: data});
-            console.log(this.state.Response);
-        }).catch(err => {
-            console.log(err);
-        });
+                    axios.post('http://52.53.159.159:8000', {
+                        social_media_type:'tiktok',
+                        post_id: video_id[0]   
+                    }).then((data) => {
+                        this.setState({Response: data});
+                        console.log(this.state.Response);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+            });
+        } else {
+            const video_id = /([0-9])+/.exec(video_id_temp);
+            axios.post('http://52.53.159.159:8000', {
+                social_media_type:'tiktok',
+                post_id: video_id[0]   
+            }).then((data) => {
+                this.setState({Response: data});
+                console.log(this.state.Response);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+
+         
     }
 
     render() {
