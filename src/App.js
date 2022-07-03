@@ -1,11 +1,15 @@
+import HeaderApp from './components/HeaderApp';
+import URLSearchForm from './components/URLSearchForm'; 
 import './App.css';
-import Header from './header_banner';
-import FormBoxes from './FormBoxes';
 
 function App() {
   return (
     <div className="App">
-      <FormBoxes></FormBoxes>
+       <HeaderApp className="mb-3" 
+          title="Pillar Social Post Reports" 
+          message="Get your social media stats" />
+
+          <URLSearchForm />
     </div>
   );
 }

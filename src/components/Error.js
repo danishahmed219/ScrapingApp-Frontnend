@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row } from 'react-bootstrap';
-import Errors from './assets/Error.png';
+import Errors from '../assets/Error.png';
 
 class Error extends React.Component {
     render() {

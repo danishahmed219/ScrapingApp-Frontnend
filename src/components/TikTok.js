@@ -2,13 +2,15 @@ import {Container, Row } from "react-bootstrap";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faUser, faHeart, faVideo } from '@fortawesome/free-solid-svg-icons';
-import Image from 'react-bootstrap/Image'
 import axios from "axios";
-import DefaultImage from './assets/user_default.jpeg';
+import DefaultImage from '../assets/user_default.jpeg';
 
 
 class TikTok extends React.Component {
     // eslint-disable-next-line no-useless-constructor
+    static API_ENDPOINT_1 = 'http://localhost:8000';
+    static API_ENDPOINT_2 = 'http://localhost:5000';
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,40 +18,26 @@ class TikTok extends React.Component {
         }
     }
 
-    componentDidMount() {
-        const video_id_temp = this.props.postObj;
-        console.log(video_id_temp);
+    componentDidMount = async () => {
+        const tiktok_video_url = this.props.tiktok_video_url;
+        let tiktok_desktop_url = null;
        
-        if(video_id_temp.match("/t/")) {
-            axios.get(`http://52.53.159.159:5000?url=${video_id_temp}`, {
-            }).then((data) => {
-                    const video_id = /([0-9])+/.exec(data.data.VideoURL);
-                    console.log(video_id[0]);
+        try {
+           
+            if(tiktok_video_url.match("/t/")) {
+                tiktok_desktop_url = await this.convert_MobileURL_To_DesktopURL(tiktok_video_url);
+              
+            } else {
+                tiktok_desktop_url = tiktok_video_url;
+            }
 
-                    axios.post('http://52.53.159.159:8000', {
-                        social_media_type:'tiktok',
-                        post_id: video_id[0]   
-                    }).then((data) => {
-                        this.setState({Response: data});
-                        console.log(this.state.Response);
-                    }).catch(err => {
-                        console.log(err);
-                    });
-            });
-        } else {
-            const video_id = /([0-9])+/.exec(video_id_temp);
-            axios.post('http://52.53.159.159:8000', {
-                social_media_type:'tiktok',
-                post_id: video_id[0]   
-            }).then((data) => {
-                this.setState({Response: data});
-                console.log(this.state.Response);
-            }).catch(err => {
-                console.log(err);
-            });
+            const tiktok_video_info = await this.getTikTokVideoInfo(tiktok_desktop_url);
+            this.setState({Response: tiktok_video_info});
+        
+        } catch(error) {
+            console.log(error);
         }
 
-         
     }
 
     render() {
@@ -90,6 +78,18 @@ class TikTok extends React.Component {
 
             </Container>
         </div>);
+    }
+
+    getTikTokVideoInfo = async (tiktok_desktop_url) => {
+        const tiktok_video_id = /([0-9])+/.exec(tiktok_desktop_url);
+        const tiktok_video_info = await axios.post(this.constructor.API_ENDPOINT_1, { social_media_type:'tiktok', tiktok_video_id: tiktok_video_id[0] });
+        return tiktok_video_info;
+    }
+
+    convert_MobileURL_To_DesktopURL= async (tiktok_mobile_url) => {
+        const mobile_api_endpoint = `${this.constructor.API_ENDPOINT_2}?url=${tiktok_mobile_url}`;
+        const tiktok_desktop_url = await axios.get(mobile_api_endpoint);
+        return tiktok_desktop_url.data.VideoURL;
     }
 }
 

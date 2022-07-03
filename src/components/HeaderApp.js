@@ -1,7 +1,8 @@
 import React from "react";
 
-class Header extends React.Component {
-
+class HeaderApp extends React.Component {
+    
+  // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
     }
@@ -15,4 +16,4 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+export default HeaderApp;
